@@ -10,10 +10,104 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=0.4">
-    <link rel="stylesheet" href="__PUBLIC__/static/admin/layui/css/layui.css">
-    <link rel="stylesheet" href="__PUBLIC__/static/admin/layui/css/style.css">
-    <script src="__PUBLIC__/static/admin/layui/layui.js"></script>
+    <link rel="stylesheet" href="__STATIC__/admin/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/admin/css/style.css">
 </head>
-<body class="layui-body">
-    {block name=""}
+<body class="layui-layout-body">
+{block name='body'}
+<div class="layui-layout layui-layout-admin layui-layout-left-hide">
+    <!-- 顶部菜单 开始 -->
+    <div class="layui-header notselect">
+        <a href="{:url('@')}" class="layui-logo layui-elip">
+            {:sysconf('app_name')} {if sysconf('app_version')}<sup class="padding-left-5">{:sysconf('app_version')}</sup>{/if}
+        </a>
+        <ul class="layui-nav layui-layout-left">
+            {volist name="sysMenu['headerMenus']" id="menu"}
+
+                {if ($i == 1)}
+                    <li class="layui-nav-item layui-this">
+                        <a href="?mid={$menu['id']}">
+                            <span class=' padding-right-5'></span>
+                            <span>{$menu['title']}</span>
+                        </a>
+                    </li>
+                {else}
+                    <li class="layui-nav-item ">
+                        <a href="?mid={$menu['id']}">
+                            <span class='padding-right-5'></span>
+                            <span>{$menu['title']}</span>
+                        </a>
+                    </li>
+                {/if}
+            {/volist}
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li lay-unselect class="layui-nav-item"><a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a></li>
+            {if session('admin')}
+            <li class="layui-nav-item">
+                <dl class="layui-nav-child">
+                    <dd lay-unselect><a data-modal="{:url('admin/index/info',['id'=>session('user.id')])}"><i class="layui-icon layui-icon-set-fill margin-right-5"></i> 基本资料</a></dd>
+                    <dd lay-unselect><a data-modal="{:url('admin/index/pass',['id'=>session('user.id')])}"><i class="layui-icon layui-icon-component margin-right-5"></i> 安全设置</a></dd>
+                    {if session('admin.username') eq 'admin'}
+                    <dd lay-unselect><a data-load="{:url('admin/api.plugs/push')}"><i class="layui-icon layui-icon-template-1 margin-right-5"></i> 缓存加速</a></dd>
+                    <dd lay-unselect><a data-load="{:url('admin/api.plugs/clear')}"><i class="layui-icon layui-icon-fonts-clear margin-right-5"></i> 清理缓存</a></dd>
+                    {/if}
+                    <dd lay-unselect><a data-load="{:url('admin/login/out')}" data-confirm="确定要退出登录吗？"><i class="layui-icon layui-icon-release margin-right-5"></i> 退出登录</a></dd>
+                </dl>
+                <a class="layui-elip">
+                    <img alt="headimg" src="">
+                    <span class="padding-left-5">{:session('admin.nickname')?:session('admini.username')}</span>
+                </a>
+            </li>
+            {else}
+            <li class="layui-nav-item">
+                <a data-href=""><i class="layui-icon layui-icon-username"></i> 立即登录</a>
+            </li>
+            {/if}
+        </ul>
+    </div>
+    <!-- 顶部菜单 结束 -->
+    <!-- 左则菜单 开始 -->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                {volist name="sysMenu['leftMenus']['parentMenus']" id="pvo"}
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">{$pvo['title']}</a>
+                    <dl class="layui-nav-child">
+                        {volist name="sysMenu['leftMenus']['childrenMenu']" id="cvo"}
+                            {if ($cvo['pid'] == $pvo['id'])}
+                                <dd><a href="javascript:;">{$cvo['title']}</a></dd>
+                            {/if}
+                        {/volist}
+                    </dl>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+    <!-- 左则菜单 结束 -->
+    <!-- 主体内容 开始 -->
+    <div class="layui-body layui-bg-gray">{block name='content'}{/block}</div>
+    <!-- 主体内容 结束 -->
+</div>
+{/block}
+<script src="__STATIC__/admin/layui/layui.all.js"></script>
+<script src="__STATIC__/admin/js/global.js"></script>
+
+<script>
+    layui.use(['element','admin'], function() {
+        var element = layui.element,
+        admin = layui.admin;
+        // var index = admin.msg.loading('加载中，请稍后', function(){
+        //
+        // });
+        //
+        // console.log(index);
+        // setTimeout(function () {
+        //     layer.close(index);
+        // },2000)
+    });
+</script>
 </body>

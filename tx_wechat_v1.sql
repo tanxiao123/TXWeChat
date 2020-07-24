@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50562
 File Encoding         : 65001
 
-Date: 2020-07-23 18:03:34
+Date: 2020-07-24 17:53:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -102,7 +102,7 @@ CREATE TABLE `tx_auth_group` (
 -- ----------------------------
 -- Records of tx_auth_group
 -- ----------------------------
-INSERT INTO `tx_auth_group` VALUES ('1', '超级管理员权限', '1', '1', null, null, null, null);
+INSERT INTO `tx_auth_group` VALUES ('1', '超级管理员权限', '1', 'all', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for tx_auth_rule
@@ -116,17 +116,25 @@ CREATE TABLE `tx_auth_rule` (
   `status` varchar(2) DEFAULT NULL COMMENT '0：禁用\r\n            1：正常',
   `icon` varchar(100) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
   `create_user` int(11) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `update_user` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tx_auth_rule
 -- ----------------------------
-INSERT INTO `tx_auth_rule` VALUES ('1', '控制台', '/admin/home/index', '1', '1', null, '0', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('1', '控制台', '/admin/home/index', '1', '1', null, '0', '1', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('2', '系统配置', '/admin/home/system', '1', '1', null, '0', '1', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('3', '微信配置', '/admin/home/wechat', '1', '1', null, '0', '1', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('4', '应用操作业务1', '/admin/home/index/app1', '1', '1', null, '1', '2', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('5', '应用操作业务2', '/admin/home/index/app2', '1', '1', null, '1', '2', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('6', '微信管理', '/admin/home/wechat/config', '1', '1', null, '3', '2', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('7', '微信接口配置', '/admin/home/wechat/api', '1', '1', null, '6', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('8', '文章管理', '/admin/home/app1/notice', '1', '1', null, '4', '3', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for tx_config
@@ -144,12 +152,13 @@ CREATE TABLE `tx_config` (
   `update_user` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tx_config
 -- ----------------------------
-INSERT INTO `tx_config` VALUES ('1', '应用名称', 'appname', null, '1', '1', null, '2020-07-23 15:00:05', null, '2020-07-23 15:00:08');
+INSERT INTO `tx_config` VALUES ('1', '应用名称', 'app_name', 'TxWeChat', '1', '1', null, '2020-07-23 15:00:05', null, '2020-07-23 15:00:08');
+INSERT INTO `tx_config` VALUES ('2', '登录失败错误次数', 'login_times', '3', '1', '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for tx_fans
