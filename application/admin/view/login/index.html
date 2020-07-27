@@ -134,9 +134,9 @@
                 success: function(res){
                     console.log(res);
                     layer.msg(res.msg);
-                    // if (res.code ===  1){
-                    //     window.location.href = "/admin/home/index";
-                    // }
+                    if (res.code ===  1){
+                         window.location.href = "/admin/index";
+                    }
                 },
                 error: function (error) {
                     console.log(error)

@@ -14,4 +14,4 @@ $a = Test::getUser();
 $a['username'] = 'name';
 $b = Test::getUser();
 
-var_dump(get_object_vars($b));
+var_dump(get_object_vars($b) );

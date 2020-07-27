@@ -10,16 +10,18 @@ namespace app\admin\controller;
 
 
 use app\common\model\Admin;
+use app\common\model\AuthRule;
 use think\Controller;
-use think\Db;
 use think\facade\Validate;
 use think\Request;
 
 class Index extends Controller
 {
 
-    public function index()
+    public function index(AuthRule $authRule)
     {
+        $menus = $authRule->getTree();
+        $this->assign('menus', $menus);
         return $this->fetch('index/index');
     }
 
@@ -48,11 +50,11 @@ class Index extends Controller
         }
 
         // 当前登录错误次数
-        $login_times = Admin::where('id', session('admin')->id )->value('login_times');
-        $sys_login_times = var_config('login_times');
-        if ($login_times > $sys_login_times ){
-            $this->error('登录失败次数超过'.$sys_login_times.'次，请联系管理员操作');
-        }
+//        $login_times = Admin::where('id', session('admin')->id )->value('login_times');
+//        $sys_login_times = var_config('login_times');
+//        if ($login_times > $sys_login_times ){
+//            $this->error('登录失败次数超过'.$sys_login_times.'次，请联系管理员操作');
+//        }
 
         session('admin', $admin);
         $this->success('登录成功');
@@ -64,4 +66,15 @@ class Index extends Controller
         session('admin', null);
         return redirect('/admin/login');
     }
+
+    public function test()
+    {
+        return '这是测试界面1';
+    }
+
+    public function test2()
+    {
+        return '这是测试界面2';
+    }
+
 }

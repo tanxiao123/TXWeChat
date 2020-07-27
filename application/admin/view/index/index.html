@@ -22,24 +22,14 @@
             {:sysconf('app_name')} {if sysconf('app_version')}<sup class="padding-left-5">{:sysconf('app_version')}</sup>{/if}
         </a>
         <ul class="layui-nav layui-layout-left">
-            {volist name="sysMenu['headerMenus']" id="menu"}
-
-                {if ($i == 1)}
-                    <li class="layui-nav-item layui-this">
-                        <a href="?mid={$menu['id']}">
-                            <span class=' padding-right-5'></span>
-                            <span>{$menu['title']}</span>
-                        </a>
-                    </li>
-                {else}
-                    <li class="layui-nav-item ">
-                        <a href="?mid={$menu['id']}">
-                            <span class='padding-right-5'></span>
-                            <span>{$menu['title']}</span>
-                        </a>
-                    </li>
-                {/if}
-            {/volist}
+            {foreach $menus as $one}
+                <li class="layui-nav-item">
+                    <a  data-menu-node="m-{$one.id}" data-open="{$one.rule}">
+                        <span class=' padding-right-5'></span>
+                        <span>{$one['title']|default=''}</span>
+                    </a>
+                </li>
+            {/foreach}
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li lay-unselect class="layui-nav-item"><a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a></li>
@@ -55,14 +45,14 @@
                     <dd lay-unselect><a data-load="{:url('admin/login/out')}" data-confirm="确定要退出登录吗？"><i class="layui-icon layui-icon-release margin-right-5"></i> 退出登录</a></dd>
                 </dl>
                 <a class="layui-elip">
-                    <img alt="headimg" src="">
+                    <img  src="__STATIC__/admin/image/avatar.jpg" style="width: 30px;height: 30px">
                     <span class="padding-left-5">{:session('admin.nickname')?:session('admini.username')}</span>
                 </a>
             </li>
             {else}
-            <li class="layui-nav-item">
-                <a data-href=""><i class="layui-icon layui-icon-username"></i> 立即登录</a>
-            </li>
+                <li class="layui-nav-item">
+                    <a data-href=""><i class="layui-icon layui-icon-username"></i> 立即登录</a>
+                </li>
             {/if}
         </ul>
     </div>
@@ -71,20 +61,36 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                {volist name="sysMenu['leftMenus']['parentMenus']" id="pvo"}
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">{$pvo['title']}</a>
-                    <dl class="layui-nav-child">
-                        {volist name="sysMenu['leftMenus']['childrenMenu']" id="cvo"}
-                            {if ($cvo['pid'] == $pvo['id'])}
-                                <dd><a href="javascript:;">{$cvo['title']}</a></dd>
-                            {/if}
-                        {/volist}
-                    </dl>
-                </li>
-                {/volist}
-            </ul>
+            {foreach $menus as $one}
+                {notempty name='one.sub'}
+                <ul class="layui-nav layui-nav-tree" data-menu-layout="m-{$one.id}">
+                    {foreach $one.sub as $two}
+                        {empty name='two.sub'}
+                            <li class="layui-nav-item layui-nav-itemed" >
+                                <a data-menu-node="m-{$one.id}-{$two.id}" data-open="{$two.rule}">
+                                    <span class='{$two.icon|default="layui-icon layui-icon-link"}'></span>
+                                    <span class="nav-text padding-left-5">{$two.title|default=''}</span>
+                                </a>
+                            </li>
+                        {else}
+                            <li class="layui-nav-item layui-nav-itemed" data-submenu-layout='m-{$one.id}-{$two.id}'>
+                                <a >{$two.title}</a>
+                                <dl class="layui-nav-child">
+                                    {foreach $two.sub as $thr}
+                                        <dd>
+                                            <a data-target-tips="{$thr.title}" data-open="{$thr.rule}" data-menu-node="m-{$one.id}-{$two.id}-{$thr.id}">
+                                                <span class='nav-icon padding-left-5 {$thr.icon|default="layui-icon layui-icon-link"}'></span>
+                                                <span class="nav-text padding-left-5">{$thr.title|default=''}</span>
+                                            </a>
+                                        </dd>
+                                    {/foreach}
+                                </dl>
+                            </li>
+                        {/empty}
+                    {/foreach}
+                </ul>
+                {/notempty}
+            {/foreach}
         </div>
     </div>
     <!-- 左则菜单 结束 -->
@@ -94,20 +100,6 @@
 </div>
 {/block}
 <script src="__STATIC__/admin/layui/layui.all.js"></script>
-<script src="__STATIC__/admin/js/global.js"></script>
-
-<script>
-    layui.use(['element','admin'], function() {
-        var element = layui.element,
-        admin = layui.admin;
-        // var index = admin.msg.loading('加载中，请稍后', function(){
-        //
-        // });
-        //
-        // console.log(index);
-        // setTimeout(function () {
-        //     layer.close(index);
-        // },2000)
-    });
-</script>
+<script src="__STATIC__/admin/plugin/admin.js"></script>
+{block name='script'}{/block}
 </body>
