@@ -20,7 +20,7 @@ class AdminAuthMiddleware
                 return redirect('/admin/login');
             }
         }
-        //app('adminAuth')->start();
+        app('adminAuth')->start();
 
         return $next($request);
     }

@@ -9,10 +9,11 @@ namespace app\admin\controller;
 
 
 use think\Controller;
+use think\Request;
 
 class Group extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $this->fetch();
     }

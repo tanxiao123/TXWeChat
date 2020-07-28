@@ -20,6 +20,8 @@ class WxAppAuth
 {
     private $apiKey;
 
+    private $field = ['openid', 'timestamp', 'memberId','signStr'];
+
     public function __construct()
     {
         $this->apiKey = config('apiAuth.apiKey');
@@ -32,7 +34,7 @@ class WxAppAuth
 
         $validate = new ApiAuthValidate();
 
-        $data = $request->only(['openid', 'timestamp', 'memberId','signStr']);
+        $data = $request->only($this->field);
         if (!$validate->check($data) ){
             $response->msg($validate->getError())->error();
         }

@@ -1,0 +1,18 @@
+.layui-card-header{
+    background: #ffffff;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+    height: 50px;
+    line-height: 50px;
+}
+
+fieldset {
+    margin: 0;
+    border: 1px solid #e6e6e6;
+    padding: 10px 20px 5px 20px;
+}
+
+.think-box-shadow {
+    padding: 20px !important;
+    background: #fff !important;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
+}
