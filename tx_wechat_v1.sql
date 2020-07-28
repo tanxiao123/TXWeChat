@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50562
 File Encoding         : 65001
 
-Date: 2020-07-24 17:53:53
+Date: 2020-07-28 17:53:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,7 +48,7 @@ INSERT INTO `tx_admin` VALUES ('1', 'admin', 'admin', null, 'aAS821f', null, nul
 -- ----------------------------
 DROP TABLE IF EXISTS `tx_admin_group_access`;
 CREATE TABLE `tx_admin_group_access` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL,
   `create_user` int(11) DEFAULT NULL,
@@ -56,12 +56,12 @@ CREATE TABLE `tx_admin_group_access` (
   `update_user` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tx_admin_group_access
 -- ----------------------------
-INSERT INTO `tx_admin_group_access` VALUES ('0', '1', '1', null, null, null, null);
+INSERT INTO `tx_admin_group_access` VALUES ('1', '1', '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for tx_attachment
@@ -122,19 +122,18 @@ CREATE TABLE `tx_auth_rule` (
   `update_user` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tx_auth_rule
 -- ----------------------------
-INSERT INTO `tx_auth_rule` VALUES ('1', '控制台', '/admin/home/index', '1', '1', null, '0', '1', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('2', '系统配置', '/admin/home/system', '1', '1', null, '0', '1', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('3', '微信配置', '/admin/home/wechat', '1', '1', null, '0', '1', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('4', '应用操作业务1', '/admin/home/index/app1', '1', '1', null, '1', '2', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('5', '应用操作业务2', '/admin/home/index/app2', '1', '1', null, '1', '2', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('6', '微信管理', '/admin/home/wechat/config', '1', '1', null, '3', '2', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('7', '微信接口配置', '/admin/home/wechat/api', '1', '1', null, '6', '3', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('8', '文章管理', '/admin/home/app1/notice', '1', '1', null, '4', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('1', '控制台', '#', '1', '1', null, '0', '1', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('2', '系统配置', '#', '1', '1', null, '0', '1', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('3', '微信配置', '#', '1', '1', null, '0', '1', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('10', '测试菜单1', 'admin/index/test', '1', '1', null, '1', '2', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('11', '角色管理', 'admin/group', '1', '1', 'layui-icon layui-icon-group', '2', '2', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('12', '菜单管理', 'admin/rule', '1', '1', 'layui-icon layui-icon-template-1', '2', '2', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('13', '测试菜单2', 'admin/index/test2', '1', '1', null, '1', '2', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for tx_config
