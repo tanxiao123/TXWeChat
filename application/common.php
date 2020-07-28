@@ -21,3 +21,28 @@ function arr2tree($list, $cid = 'id', $pid = 'pid', $sub = 'sub')
     unset($tmp, $list);
     return $tree;
 }
+
+/**
+ * 一维数组生成数据树
+ * @param array $list 待处理数据
+ * @param string $cid 自己的主键
+ * @param string $pid 上级的主键
+ * @param string $cpath 当前 PATH
+ * @param string $ppath 上级 PATH
+ * @return array
+ */
+function arr2table(array $list, $cid = 'id', $pid = 'pid', $cpath = 'path', $ppath = '')
+{
+    $tree = [];
+    foreach (arr2tree($list, $cid, $pid) as $attr) {
+        $attr[$cpath] = "{$ppath}-{$attr[$cid]}";
+        $attr['sub'] = $attr['sub'] ?? [];
+        $attr['spt'] = substr_count($ppath, '-');
+        $attr['spl'] = str_repeat("　├　", $attr['spt']);
+        $sub = $attr['sub'];
+        unset($attr['sub']);
+        $tree[] = $attr;
+        if (!empty($sub)) $tree = array_merge($tree, arr2table($sub, $cid, $pid, $cpath, $attr[$cpath]));
+    }
+    return $tree;
+}

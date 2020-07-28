@@ -1,10 +1,10 @@
 <?php
 
-namespace app\lib\admin;
+namespace tx\auth;
 
 use think\Db;
 
-class Auth
+class AdminAuth
 {
     public $_config = array(
         'auth_group' => 'auth_group',

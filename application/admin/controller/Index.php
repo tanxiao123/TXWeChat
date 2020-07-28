@@ -26,6 +26,7 @@ class Index extends Controller
     public function index(AuthRule $authRule)
     {
         $menus = $authRule->getTree();
+        //return json($menus);
         $this->assign('menus', $menus);
         return $this->fetch('index/index');
     }

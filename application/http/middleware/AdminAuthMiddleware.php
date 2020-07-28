@@ -20,6 +20,8 @@ class AdminAuthMiddleware
                 return redirect('/admin/login');
             }
         }
+
+        // 启动授权服务验证
         app('adminAuth')->start();
 
         return $next($request);

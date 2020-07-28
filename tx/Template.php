@@ -5,7 +5,7 @@
  *  description: 模板类
  */
 
-namespace app\lib\admin;
+namespace tx;
 
 
 use think\template\TagLib;
@@ -37,7 +37,6 @@ class Template extends TagLib
         $this->tableParseStr .= '</tr></thead>';
         // TODO: 内容标签开始
         $this->tableParseStr .= '<tbody>';
-
         if (strpos($tag['body'],'$') === 0){
             $body = $tag['body'];
             $this->autoBuildVar($body);

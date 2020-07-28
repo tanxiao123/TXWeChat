@@ -5,14 +5,14 @@
  *  description:
  */
 
-namespace app\lib;
+namespace tx\helper;
 
 
-use app\lib\admin\Auth;
 use think\Request;
 use traits\controller\Jump;
+use tx\auth\AdminAuth;
 
-class AdminAuth
+class AdminAuthHelper
 {
 
     use Jump;
@@ -24,7 +24,7 @@ class AdminAuth
     public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->auth = new Auth();
+        $this->auth = new AdminAuth();
     }
 
     public function start()

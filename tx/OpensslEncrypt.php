@@ -5,9 +5,13 @@
  *  description:
  */
 
-namespace app\lib;
+namespace tx;
 
-
+/**
+ * 消息解密类
+ * Class OpensslEncrypt
+ * @package app\tx
+ */
 class OpensslEncrypt
 {
     /**

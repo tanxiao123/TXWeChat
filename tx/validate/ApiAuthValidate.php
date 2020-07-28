@@ -5,7 +5,7 @@
  *  description:
  */
 
-namespace app\lib\validate;
+namespace tx\validate;
 
 
 use think\Validate;

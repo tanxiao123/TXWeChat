@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=7.2.2",
         "topthink/framework": "5.1.*",
         "ext-json": "*",
         "ext-openssl": "*",
@@ -24,7 +24,8 @@
     },
     "autoload": {
         "psr-4": {
-            "app\\": "application"
+            "app\\": "application",
+            "tx\\": "tx"
         }
     },
     "extra": {

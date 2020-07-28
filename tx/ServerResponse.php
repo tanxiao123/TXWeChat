@@ -5,7 +5,7 @@
  *  description:
  */
 
-namespace app\lib;
+namespace tx;
 
 
 use think\exception\HttpResponseException;
@@ -14,7 +14,7 @@ use think\facade\Response;
 /**
  * 请求响应类
  * Class ServerResponse
- * @package app\lib
+ * @package app\tx
  */
 class ServerResponse
 {
@@ -74,6 +74,16 @@ class ServerResponse
         $result['status'] = $this->status;
         $result['msg'] = $this->msg;
         $result['data'] = $this->data;
+        $response = Response::create($result, $this->responseType)->header($this->header);
+        throw new HttpResponseException($response);
+    }
+
+    public function layResponse($data = [], $count = 0)
+    {
+        $result['code'] = 0;
+        $result['msg'] = 'SUCCESS';
+        $result['data'] = $data;
+        $result['count'] = $count;
         $response = Response::create($result, $this->responseType)->header($this->header);
         throw new HttpResponseException($response);
     }
