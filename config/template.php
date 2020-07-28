@@ -35,5 +35,5 @@ return [
         '__STATIC__'=> '/static'
     ],
     // 自定义模板标签
-    'taglib_build_in' => 'cx,app\lib\admin\Template'
+    'taglib_build_in' => 'cx,tx\Template'
 ];
