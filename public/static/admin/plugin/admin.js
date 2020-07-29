@@ -187,6 +187,7 @@ $(function () {
             if (typeof data === 'object' && typeof data['_token_'] === 'string') {
                 headers = headers || {}, headers['User-Form-Token'] = data['_token_'], delete data['_token_'];
             }
+            console.log($.menu.parseUri(url));
             $.ajax({
                 data: data || {}, type: method || 'GET', url: $.menu.parseUri(url), beforeSend: function (xhr, i) {
                     if (typeof Pace === 'object' && loading !== false) Pace.restart();
@@ -285,6 +286,7 @@ $(function () {
             var attrs = [];
             for (var i in params) attrs.push([i, params[i]].join('='));
             var query = '?' + attrs.join('&');
+            console.log(uri);
             return uri + (query === '?' ? '' : query);
         };
         // 后台菜单动作初始化
@@ -664,6 +666,7 @@ $(function () {
     /*! 注册 data-href 事件行为 */
     $body.on('click', '[data-href]', function (href) {
         href = $(this).attr('data-href');
+        console.log(href);
         if (href && href.indexOf('#') !== 0) window.location.href = href;
     });
 

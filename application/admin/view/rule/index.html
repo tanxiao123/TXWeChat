@@ -21,7 +21,7 @@
 <script>window.form.render()</script>
 <script type="text/html" id="barField">
     {{# if(d.spt < 2){ }}
-        <a class="layui-btn layui-btn-xs layui-btn-primary" >添 加</a>
+        <a class="layui-btn layui-btn-xs layui-btn-primary" data-modal="/admin/rule/add?pid={{d.id}}">添 加</a>
     {{# }else{ }}
         <a class="layui-btn layui-btn-xs layui-btn-disabled">添 加</a>
     {{# } }}

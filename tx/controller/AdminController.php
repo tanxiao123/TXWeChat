@@ -10,11 +10,64 @@ namespace tx\controller;
 
 use think\App;
 use think\Controller;
+use tx\service\FormService;
 use tx\service\PageService;
 
 class AdminController extends Controller
 {
 
+    /**
+     * 是否开启自动化
+     * @var boolean
+     */
+    protected $isAuto = true;
+
+    public function getAuto()
+    {
+        return $this->isAuto;
+    }
+
+    public function __construct(App $app = null)
+    {
+        bind('tx\controller\AdminController', $this);
+        parent::__construct($app);
+    }
+
+    /**
+     * 数据回调处理机制
+     * @param string $name 回调方法名称
+     * @param mixed $one 回调引用参数1
+     * @param mixed $two 回调引用参数2
+     * @return boolean
+     */
+    public function callback($name, &$one = [], &$two = [])
+    {
+        if (is_callable($name)) return call_user_func($name, $this, $one, $two);
+        foreach ([$name, "_{$this->app->request->action()}{$name}"] as $method) {
+            if (method_exists($this, $method)) {
+                $this->$method($one, $two);
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    public function fetch($template = '', $vars = [], $config = [])
+    {
+        $response =  parent::fetch($template, $vars, $config);
+        return $response;
+    }
+
+    public function success($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
+    {
+        parent::success($msg, $url, $data, $wait, $header);
+    }
+
+    public function error($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
+    {
+        parent::error($msg, $url, $data, $wait, $header);
+    }
 
     /**
      * 快捷分页
@@ -36,12 +89,19 @@ class AdminController extends Controller
         return $page->alias($alias)->join($join)->where($where)->orm($query, $page, $limit);
     }
 
+
     /**
      * 快捷表单
+     * @param $dbQuery
+     * @param string $template
+     * @param string $field
+     * @param array $where
+     * @param array $data
+     * @return mixed
      */
-    protected function _form()
+    protected function _form($dbQuery, $template = '', $field = '', $where = [], $data = [])
     {
-
+        return FormService::instance()->init($dbQuery,$template,$field,$where,$data);
     }
 
     /**

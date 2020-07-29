@@ -7,6 +7,4 @@ Route::group('admin', function (){
     Route::post('doLogin', 'admin/Index/doLogin');
     // 退出登录操作
     Route::rule('loginOut','admin/Index/loginOut');
-
-//    Route::rule('/','admin/Index/index')->middleware(\app\http\middleware\AdminAuthMiddleware::class);
 });

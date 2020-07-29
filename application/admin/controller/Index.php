@@ -18,6 +18,10 @@ use think\Request;
 class Index extends Controller
 {
 
+    protected $middleware = [
+        'AdminAuthMiddleware' => ['except'=>['login','doLogin','loginOut'] ]
+    ];
+
     /**
      * 加载首页
      * @param AuthRule $authRule

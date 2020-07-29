@@ -7,8 +7,9 @@ namespace tx\service;
 use think\App;
 use think\Db;
 use think\db\Query;
+use tx\Service;
 
-class PageService
+class PageService extends Service
 {
     /**
      * 查询对象
@@ -48,6 +49,7 @@ class PageService
     public function __construct(App $app)
     {
         $this->app = $app;
+        parent::__construct($app);
     }
 
     public function where($param = array() )
@@ -78,7 +80,7 @@ class PageService
     public function orm($dbQuery, $page = 1, $limit = 10)
     {
         $this->page = $page <= 0 ? 1 : $page;
-        $this->query = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
+        $this->query = $this->buildQuery($dbQuery);
         $this->limit = $limit;
 
         $this->total = $this->query->where($this->where)->count();

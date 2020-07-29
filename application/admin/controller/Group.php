@@ -13,6 +13,9 @@ use think\Request;
 
 class Group extends Controller
 {
+
+    protected $middleware = ['AdminAuthMiddleware'];
+
     public function index(Request $request)
     {
         $this->fetch();

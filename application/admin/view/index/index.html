@@ -42,7 +42,7 @@
                     <dd lay-unselect><a data-load="{:url('admin/api.plugs/push')}"><i class="layui-icon layui-icon-template-1 margin-right-5"></i> 缓存加速</a></dd>
                     <dd lay-unselect><a data-load="{:url('admin/api.plugs/clear')}"><i class="layui-icon layui-icon-fonts-clear margin-right-5"></i> 清理缓存</a></dd>
                     {/if}
-                    <dd lay-unselect><a data-load="{:url('admin/login/out')}" data-confirm="确定要退出登录吗？"><i class="layui-icon layui-icon-release margin-right-5"></i> 退出登录</a></dd>
+                    <dd lay-unselect><a href="/admin/loginOut"><i class="layui-icon layui-icon-release margin-right-5"></i> 退出登录</a></dd>
                 </dl>
                 <a class="layui-elip">
                     <img  src="__STATIC__/admin/image/avatar.jpg" style="width: 30px;height: 30px">
@@ -51,7 +51,7 @@
             </li>
             {else}
                 <li class="layui-nav-item">
-                    <a data-href=""><i class="layui-icon layui-icon-username"></i> 立即登录</a>
+                    <a href="/admin/login"><i class="layui-icon layui-icon-username"></i> 立即登录</a>
                 </li>
             {/if}
         </ul>

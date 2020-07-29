@@ -9,7 +9,7 @@ class AuthRule extends Model
 
     public function getTree()
     {
-        $result = $this->where(['status'=> '1'])->order('id asc')->select();
+        $result = $this->where(['status'=> '1', 'type'=>1])->order('id asc')->select();
         return arr2tree($this->buildData($result->toArray() ));
     }
 
