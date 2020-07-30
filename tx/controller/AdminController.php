@@ -10,8 +10,10 @@ namespace tx\controller;
 
 use think\App;
 use think\Controller;
+use tx\service\DeleteService;
 use tx\service\FormService;
 use tx\service\PageService;
+use tx\service\SaveService;
 
 class AdminController extends Controller
 {
@@ -112,20 +114,31 @@ class AdminController extends Controller
 
     }
 
+
     /**
      * 快捷更新
+     * @param $dbQuery
+     * @param array $data 表单扩展数据
+     * @param string $field 数据对象主键
+     * @param array $where 额外更新条件
+     * @return mixed
      */
-    protected function _save()
+    protected function _save($dbQuery, $data = [], $field = '', $where = [])
     {
-
+        return SaveService::instance()->init($dbQuery, $data, $field, $where);
     }
 
-    /**
-     * 快捷删除
-     */
-    protected function _delete()
-    {
 
+    /**
+     * 快捷删除操作
+     * @param $dbQuery
+     * @param string $field
+     * @param array $where
+     * @return mixed
+     */
+    protected function _delete($dbQuery, $field = '', $where = [])
+    {
+        return DeleteService::instance()->init($dbQuery, $field, $where);
     }
 
     /**

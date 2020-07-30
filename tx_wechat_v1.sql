@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50562
 File Encoding         : 65001
 
-Date: 2020-07-28 17:53:58
+Date: 2020-07-30 17:47:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -122,18 +122,25 @@ CREATE TABLE `tx_auth_rule` (
   `update_user` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of tx_auth_rule
 -- ----------------------------
 INSERT INTO `tx_auth_rule` VALUES ('1', '控制台', '#', '1', '1', null, '0', '1', null, null, null, null);
 INSERT INTO `tx_auth_rule` VALUES ('2', '系统配置', '#', '1', '1', null, '0', '1', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('24', '访问权限管理', '/admin/group/index', '1', '1', 'layui-icon layui-icon-group', '2', '2', null, null, null, null);
 INSERT INTO `tx_auth_rule` VALUES ('3', '微信配置', '#', '1', '1', null, '0', '1', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('10', '测试菜单1', 'admin/index/test', '1', '1', null, '1', '2', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('11', '角色管理', 'admin/group', '1', '1', 'layui-icon layui-icon-group', '2', '2', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('12', '菜单管理', 'admin/rule', '1', '1', 'layui-icon layui-icon-template-1', '2', '2', null, null, null, null);
-INSERT INTO `tx_auth_rule` VALUES ('13', '测试菜单2', 'admin/index/test2', '1', '1', null, '1', '2', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('23', '菜单删除操作权限', '/admin/rule/remove', '2', '1', null, '12', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('16', '菜单添加操作权限', '/admin/rule/add', '2', '1', null, '12', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('12', '菜单管理', '/admin/rule/index', '1', '1', 'layui-icon layui-icon-template-1', '2', '2', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('25', '访问请求权限', '/admin/group/getRuleList', '2', '1', null, '24', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('15', '菜单请求访问权限', '/admin/rule/getrulelist', '2', '1', null, '12', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('22', '测试菜单1', '/admin/index/test', '1', '1', '', '1', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('20', '菜单编辑操作权限', '/admin/rule/edit', '2', '1', null, '12', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('21', '菜单禁用启用权限', '/admin/rule/state', '2', '1', null, '12', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('26', '访问编辑权限', '/admin/group/edit', '2', '1', null, '24', '3', null, null, null, null);
+INSERT INTO `tx_auth_rule` VALUES ('27', '访问权限授权', '/admin/group/apply', '2', '1', null, '24', '3', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for tx_config

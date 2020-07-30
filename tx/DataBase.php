@@ -64,7 +64,7 @@ class DataBase extends Model
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function _auto_delete($where = array(), $isDelete = 0, $default = array())
+    public function _auto_remove($where = array(), $isDelete = 0, $default = array())
     {
         if (empty($where)) $where = $this->request->post('where') ?? [];
         if ($isDelete == 0){
@@ -81,7 +81,7 @@ class DataBase extends Model
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function _auto_update($where = array(), $value = array())
+    public function _auto_edit($where = array(), $value = array())
     {
         if (empty($where)) $where = $this->request->post('where') ?? [];
         if (empty($value)) $value = $this->request->post('form_data') ?? [];

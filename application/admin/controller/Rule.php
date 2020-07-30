@@ -8,10 +8,9 @@
 namespace app\admin\controller;
 
 
-use app\common\model\AuthRule;
-use think\Request;
 use tx\controller\AdminController;
 use tx\ServerResponse;
+use tx\service\PageService;
 
 class Rule extends AdminController
 {
@@ -26,12 +25,11 @@ class Rule extends AdminController
         return $this->fetch();
     }
 
-    public function getRuleList(Request $request, ServerResponse $response)
+    public function getRuleList(ServerResponse $response)
     {
-        $count = AuthRule::where('status','<>',9)->count();
-        $result = AuthRule::where('status','<>',9)->select();
-        $result = arr2table($result->toArray());
-        $response->layResponse($result,$count);
+        $result = PageService::instance()->setQuery($this->table)->queryWhere('status','<>',9)->orm();
+        $result['result'] = arr2table($result['result']);
+        $response->layResponse($result['result'], $result['total']);
     }
 
     public function add()
@@ -63,29 +61,23 @@ class Rule extends AdminController
                     unset($menu[$key]);
                 }
             }
-
             $this->assign('menus', $menus);
-
         }
     }
 
-//    public function _form_result(&$vo)
-//    {
-//        if ($this->request->isPost() ){
-//            if (!empty($this->request->post('where') )){
-//                if (!empty($this->request->post('form_data'))){
-//                    $this->app->db()->name($this->table)
-//                        ->where($this->request->post('where') )
-//                        ->update($this->request->post('form_data') );
-//                }else{
-//                    $this->app->db()->name($this->table)
-//                        ->where($this->request->post('where') )
-//                        ->delete();
-//                }
-//            }else if( empty($this->request->post('where')) && !empty($this->request->post('form_data') ) ){
-//                $this->app->db()->name($this->table)->insertGetId($this->request->post());
-//            }
-//        }
-//    }
+    public function edit()
+    {
+        return $this->_form($this->table, 'form');
+    }
 
+
+    public function state()
+    {
+        $this->_save($this->table,['status'=> input('status')],'id');
+    }
+
+    public function remove()
+    {
+        $this->_delete($this->table, 'id');
+    }
 }

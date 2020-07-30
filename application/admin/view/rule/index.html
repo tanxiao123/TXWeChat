@@ -25,13 +25,13 @@
     {{# }else{ }}
         <a class="layui-btn layui-btn-xs layui-btn-disabled">添 加</a>
     {{# } }}
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" data-modal="/admin/rule/edit?id={{d.id}}">编辑</a>
     {{# if(d.status == '1'){ }}
-        <a class="layui-btn layui-btn-warm layui-btn-xs" >禁 用</a>
+        <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="/admin/rule/state?id={{d.id}}" data-value="id#{{d.id}};status#0">禁 用</a>
     {{# }else{ }}
-    <a class="layui-btn layui-btn-warm layui-btn-xs" >启 用</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="/admin/rule/state" data-value="id#{{d.id}};status#1">启 用</a>
     {{# } }}
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" data-confirm="确定要删除该菜单吗？" data-action="/admin/rule/remove" data-value="id#{{d.id}}">删除</a>
 </script>
 <script>
     layui.use(['table'], function(){

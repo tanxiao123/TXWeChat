@@ -18,11 +18,6 @@ class PageService extends Service
     protected $query;
 
     /**
-     * @var App
-     */
-    protected $app;
-
-    /**
      * 当前页数
      * @var int
      */
@@ -46,10 +41,16 @@ class PageService extends Service
      */
     protected $where = array();
 
-    public function __construct(App $app)
+    public function setQuery($dbQuery)
     {
-        $this->app = $app;
-        parent::__construct($app);
+        $this->query = $this->buildQuery($dbQuery);
+        return $this;
+    }
+
+    public function queryWhere($field, $op = null, $condition = null)
+    {
+        $this->query->where($field, $op, $condition);
+        return $this;
     }
 
     public function where($param = array() )
@@ -77,18 +78,22 @@ class PageService extends Service
         return $this;
     }
 
-    public function orm($dbQuery, $page = 1, $limit = 10)
+    public function orm($dbQuery = '', $page = 1, $limit = 10)
     {
-        $this->page = $page <= 0 ? 1 : $page;
-        $this->query = $this->buildQuery($dbQuery);
+        if (input('page') ){
+            $this->page = input('page');
+        }else{
+            $this->page = $page;
+        }
+        empty($this->query) && $this->query = $this->buildQuery($dbQuery);
         $this->limit = $limit;
 
         $this->total = $this->query->where($this->where)->count();
 
         $result = $this->query->where($this->where)
-            ->limit(($this->page * $this->limit),$this->limit)
+            ->limit(( ($this->page - 1) * $this->limit),$this->limit)
             ->select();
-        return [$result, $this->page, $this->limit, $this->total];
+        return array('result'=>$result, 'page'=>$this->page, 'limit'=>$this->limit, 'total'=>$this->total);
     }
 
     public function query($sql, $page, $limit)
@@ -98,6 +103,6 @@ class PageService extends Service
         $this->total = count(Db::query($sql) );
         $sql = $sql. ' LIMIT '.($this->page * $this->limit).' , '.$this->limit;
         $result = Db::query($sql);
-        return [$result,$this->page, $this->limit, $this->total];
+        return array('result'=>$result, 'page'=>$this->page, 'limit'=>$this->limit, 'total'=>$this->total);
     }
 }

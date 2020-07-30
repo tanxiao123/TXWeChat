@@ -60,6 +60,7 @@ class FormService extends Service
             return $data;
         }
         // POST请求, 数据自动存库处理
+        $url = $this->app->request->controller().'/'.$this->app->request->action();
         if ($this->app->request->isPost() ){
             $data = array_merge($this->app->request->post(), $this->data);
             if (false !== $this->controller->callback('_form_result', $result, $data) ){
@@ -70,14 +71,15 @@ class FormService extends Service
                 }
             }else{
                 if ($this->controller->getAuto() ){
+                    // 校验是否有额外数据
                     $action = strtolower($this->app->request->action() );
-                    if (in_array($action, ['add','update','delete']) ){
+                    if (in_array($action, ['add','edit','remove']) ){
                         $func = '_auto_'.$action;
                         DataBase::instance()->setTable(config('database.prefix').$dbQuery)->$func();
-                        $this->controller->success('成功');
+                        $this->controller->success('成功','');
                     }
                 }
-                $this->controller->error('失败');
+                $this->controller->error('失败','');
             }
         }
     }

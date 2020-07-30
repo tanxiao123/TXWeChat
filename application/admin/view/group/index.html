@@ -1,0 +1,41 @@
+{extend name='main'}
+
+{block name='content'}
+<div class="think-box-shadow">
+    <table class="layui-table" id="dataTable"></table>
+</div>
+<script type="text/html" id="barField">
+    <a data-dbclick class="layui-btn layui-btn-sm" data-title="编辑权限" data-modal='{:url("edit")}?id={{d.id}}'>编 辑</a>
+    <a class="layui-btn layui-btn-normal layui-btn-sm" data-open='{:url("apply")}?id={{d.id}}'>授 权</a>
+    {{# if(d.status == '1'){ }}
+    <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="/admin/rule/state?id={{d.id}}" data-value="id#{{d.id}};status#0">禁 用</a>
+    {{# }else{ }}
+    <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="/admin/rule/state" data-value="id#{{d.id}};status#1">启 用</a>
+    {{# } }}
+</script>
+<script>
+    window.form.render();
+    layui.use(['table'], function () {
+        var table = layui.table;
+        table.render({
+            elem: '#dataTable',
+            url: "{:url('getRuleList')}",
+            page: true,
+            cols: [[
+                {field: 'id', title: 'ID',  fixed: 'left'},
+                {field: 'title', title: '标题'},
+                {field: 'status', templet: function (d) {
+                    switch (d.status) {
+                        case '0':
+                            return "<span style='color: red'>已禁用</span>";
+                        case '1':
+                            return "<span style='color: #008800'>使用中</span>";
+                    }
+                }},
+                {field: 'create_time', title: '创建时间'},
+                {fixed: 'right', title:'操作', toolbar: '#barField', width:300}
+            ]]
+        });
+    });
+</script>
+{/block}
