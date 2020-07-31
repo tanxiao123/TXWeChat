@@ -44,15 +44,20 @@ class Group extends AdminController
     public function apply()
     {
         $validate = Validate::make(['id'=>'require','id.require'=>'权限ID不可为空']);
-        if (!$validate->check($this->request->get() ) ){
+        if (!$validate->check($this->request->param() ) ){
             $this->error('权限ID不可为空');
         }
         if (input('action') === 'get'){
-            $checked = $this->app->db()->name($this->table)->where('id', $this->request->get('id') )->value('rules');
-            $list = $this->app->db()->name('auth_rule')->whereIn('id', $checked)->select();
-            $list = arr2tree($list);
-            $this->assign('list', $list);
-            $this->success('成功');
+            $list = $this->app->db()->name('auth_rule')->field('id,title,rule as node,pid')->select();
+            $rules = $this->app->db()->name($this->table)->where('id', $this->request->param('id'))->value('rules');
+            if (!empty($rules) && "all" == strtolower($rules) ){
+                $checked = $list;
+            }else{
+                $checked = $this->app->db()->name($this->table)->whereIn('id', implode(',',$rules) )->select();
+            }
+            $list = getViewTree($list,$checked);
+
+            $this->success('成功','',$list);
         }elseif(input('action') === 'save'){
 
         }else{
