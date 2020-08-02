@@ -12,16 +12,15 @@ use think\Controller;
 use think\Request;
 use think\Validate;
 use tx\controller\AdminController;
+use tx\middleware\AdminAuthMiddleware;
 use tx\ServerResponse;
 use tx\service\PageService;
 
 class Group extends AdminController
 {
-
-
     public $table = "auth_group";
 
-    protected $middleware = ['AdminAuthMiddleware'];
+    protected $middleware = [AdminAuthMiddleware::class];
 
     public function index(Request $request)
     {

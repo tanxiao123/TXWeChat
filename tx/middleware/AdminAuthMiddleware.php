@@ -1,6 +1,6 @@
 <?php
 
-namespace app\http\middleware;
+namespace tx\middleware;
 /**
  * 此中间件用于校验用户是否登录 获取用户信息、校验角色权限、获取菜单等相关信息
  * Class AdminAuthMiddleware

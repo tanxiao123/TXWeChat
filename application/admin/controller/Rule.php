@@ -9,13 +9,14 @@ namespace app\admin\controller;
 
 
 use tx\controller\AdminController;
+use tx\middleware\AdminAuthMiddleware;
 use tx\ServerResponse;
 use tx\service\PageService;
 
 class Rule extends AdminController
 {
 
-    protected $middleware = ['AdminAuthMiddleware'];
+    protected $middleware = [AdminAuthMiddleware::class];
 
     protected $table = "auth_rule";
 

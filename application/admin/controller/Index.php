@@ -14,12 +14,13 @@ use app\common\model\AuthRule;
 use think\Controller;
 use think\facade\Validate;
 use think\Request;
+use tx\middleware\AdminAuthMiddleware;
 
 class Index extends Controller
 {
 
     protected $middleware = [
-        'AdminAuthMiddleware' => ['except'=>['login','doLogin','loginOut'] ]
+        AdminAuthMiddleware::class => ['except'=>['login','doLogin','loginOut'] ]
     ];
 
     /**
