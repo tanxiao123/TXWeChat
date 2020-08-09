@@ -1,9 +1,14 @@
 <?php
 
 // 读取系统配置
-function sysconf($name)
+function sysconf($name = null)
 {
     return \app\common\model\Config::getVarValue($name);
+}
+
+function tablename($name)
+{
+    return config('database.prefix').$name;
 }
 
 /**

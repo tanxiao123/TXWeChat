@@ -60,7 +60,6 @@ class FormService extends Service
             return $data;
         }
         // POST请求, 数据自动存库处理
-        $url = $this->app->request->controller().'/'.$this->app->request->action();
         if ($this->app->request->isPost() ){
             $data = array_merge($this->app->request->post(), $this->data);
             if (false !== $this->controller->callback('_form_result', $result, $data) ){

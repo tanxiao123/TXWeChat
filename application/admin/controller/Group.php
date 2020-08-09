@@ -18,7 +18,7 @@ use tx\service\PageService;
 
 class Group extends AdminController
 {
-    public $table = "auth_group";
+    protected $table = "auth_group";
 
     protected $middleware = [AdminAuthMiddleware::class];
 

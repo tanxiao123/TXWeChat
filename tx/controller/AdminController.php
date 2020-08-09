@@ -19,6 +19,12 @@ class AdminController extends Controller
 {
 
     /**
+     * 当前操作表名
+     * @var string
+     */
+    protected $table;
+
+    /**
      * 是否开启自动化
      * @var boolean
      */
@@ -147,5 +153,23 @@ class AdminController extends Controller
     protected function _applyFormToken()
     {
 
+    }
+
+    public function _search($search = array() )
+    {
+        // ['search']['name'] => ['in','100']
+        $search = empty($search) ?? $this->request->param('search');
+        if (is_array($search) && count($search) > 0){
+            $query = $this->app->db()->name($this->table);
+            foreach($search as $k => $s) {
+                if (is_array($s)){
+                    $query->where($k,$s[0],$s[1]);
+                }else{
+                    $query->where($k,$s);
+                }
+            }
+            $this->callback('search', $query);
+        }
+        return false;
     }
 }
