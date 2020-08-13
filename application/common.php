@@ -6,6 +6,11 @@ function sysconf($name = null)
     return \app\common\model\Config::getVarValue($name);
 }
 
+function tablename($name)
+{
+    return config('database.prefix').$name;
+}
+
 /**
  * 一维数组生成数据树
  * @param array $list 待处理数据

@@ -21,7 +21,8 @@
         "ext-json": "*",
         "ext-openssl": "*",
         "ext-iconv": "*",
-        "naixiaoxin/think-wechat": "^1.6"
+        "naixiaoxin/think-wechat": "^1.6",
+        "qiniu/php-sdk": "^7.2"
     },
     "autoload": {
         "psr-4": {
