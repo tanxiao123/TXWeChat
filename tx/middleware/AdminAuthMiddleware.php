@@ -10,15 +10,14 @@ class AdminAuthMiddleware
 {
 
     protected $whiteList = [
-        'admin/login'
+        'admin/login',
+        'admin/verify'
     ];
 
     public function handle($request, \Closure $next)
     {
-        if (!session('admin') ){
-            if (!in_array($request->path(), $this->whiteList)){
-                return redirect('/admin/login');
-            }
+        if (in_array($request->path(), $this->whiteList) ){
+            return $next($request);
         }
 
         // 启动授权服务验证

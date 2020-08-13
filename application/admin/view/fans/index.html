@@ -1,0 +1,25 @@
+{extend name='main'}
+
+{block name='content'}
+<div class="think-box-shadow">
+    <table class="layui-table" id="dataTable"></table>
+</div>
+<script>
+    window.form.render();
+    layui.use(['table'], function () {
+        var table = layui.table;
+        table.render({
+            elem: '#dataTable',
+            url: "{:url('getFansList')}",
+            page: true,
+            cols: [[
+                {field: 'id', title: 'ID',  fixed: 'left'},
+                {field: 'nickname', title: '昵称'},
+                {field: 'avatar', title: '头像', templet: function (d) {
+                    return "<img src='"+d.avatar+"' style='width: 30px; height: 30px;' />"
+                }}
+            ]]
+        });
+    })
+</script>
+{/block}

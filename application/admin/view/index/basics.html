@@ -1,0 +1,53 @@
+<form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
+    <div class="layui-card-body padding-left-40">
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号<span style="color: red">*</span></label>
+            <div class="layui-input-inline">
+                <input type="text" name="account" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input" value="{$vo->account}">
+            </div>
+            <div class="layui-form-mid layui-word-aux">请谨慎修改，账号用于登录</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名<span style="color: red">*</span></label>
+            <div class="layui-input-block">
+                <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input" value="{$vo->username}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-block">
+                <input type="text" name="phone" required  lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input" value="{$vo->phone}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-block">
+                <input type="email" name="email" required  lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input" value="{$vo->email}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码<span style="color: red">*</span></label>
+            <div class="layui-input-block">
+                <input type="password" name="password" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" value="{$vo->password}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码<span style="color: red">*</span></label>
+            <div class="layui-input-block">
+                <input type="password" name="confirmPassword" required  lay-verify="required" placeholder="请输入确认密码" autocomplete="off" class="layui-input" value="{$vo->password}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">错误次数</label>
+            <div class="layui-input-inline">
+                <input type="number" name="login_number" required  lay-verify="required" placeholder="请输入错误次数" autocomplete="off" class="layui-input" value="{$vo->login_number|default=0}">
+            </div>
+            <div class="layui-form-mid layui-word-aux">可重置登录错误次数</div>
+        </div>
+        {notempty name='vo.id'}<input type='hidden' value='{$vo.id}' name='id'>{/notempty}
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type='submit'>保存数据</button>
+            <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+        </div>
+    </div>
+</form>

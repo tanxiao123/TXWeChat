@@ -11,6 +11,7 @@ namespace app\admin\controller;
 
 use app\common\model\Admin;
 use app\common\model\AuthRule;
+use think\captcha\Captcha;
 use think\Controller;
 use think\facade\Validate;
 use think\Request;
@@ -31,7 +32,6 @@ class Index extends Controller
     public function index(AuthRule $authRule)
     {
         $menus = $authRule->getTree();
-        //return json($menus);
         $this->assign('menus', $menus);
         return $this->fetch('index/index');
     }
@@ -54,10 +54,11 @@ class Index extends Controller
      */
     public function doLogin(Request $request)
     {
-        $data = $request->only(['username','password']);
+        $data = $request->only(['username','password','captcha']);
         $validate = Validate::make([
             'username'=>'require',
-            'password'=>'require'
+            'password'=>'require',
+            'captcha'=>'require|captcha'
         ]);
         if (!$validate->check($data) ){
             $this->error($validate->getError() );
@@ -95,14 +96,63 @@ class Index extends Controller
         return redirect('/admin/login');
     }
 
-    public function test()
+    /**
+     * 生成验证码
+     * @return \think\Response
+     */
+    public function verify()
     {
-        return '这是测试界面1';
+        $config = [
+            // 验证码字体大小
+            'fontSize'    =>    15,
+            // 验证码位数
+            'length'      =>    3,
+            // 关闭验证码杂点
+            'useNoise'    =>    false,
+        ];
+        $captcha = new Captcha($config);
+        return $captcha->entry();
     }
 
-    public function test2()
+    /**
+     * 基础资料模块
+     * @param Request $request
+     * @return mixed
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
+    public function basics(Request $request)
     {
-        return '这是测试界面2';
+        $aid = $request->param('id');
+        $admin = Admin::where('id', $aid)->find();
+        if (empty($admin) ){
+            $this->error('admin not found!');
+        }
+        if ($request->isPost() ){
+            $data = $request->only(['account','username','password','confirmPassword']);
+            $validate = Validate::make(['account'=>'require','username'=>'require','password'=>'require','confirmPassword'=>'require|confirm:password']);
+            if (!$validate->check($data) ){
+                $this->error($validate->getError());
+            }
+            $data['password'] = $admin['password'] == $data['password'] ? $admin['password'] : crypt($data['password'], $admin->password_reset_token);
+            $upData = [
+                'account' => $data['account'],
+                'username' => $data['username'],
+                'password' => $data['password'],
+                'status' => 1,
+                'update_time' => date('Y-m-d H:i:s')
+            ];
+            !empty($request->param('phone')) && $upData['phone'] = $request->param('phone');
+            !empty($request->param('email')) && $upData['email'] = $request->param('email');
+            !empty($request->param('login_number')) && $upData['login_number'] = $request->param('login_number');
+            Admin::where('id', $aid)->update($upData);
+            session('admin', Admin::where('id', $aid)->find() );
+            $this->success('SUCCESS');
+        }
+        $this->assign('vo', $admin);
+        return $this->fetch();
     }
-
 }
