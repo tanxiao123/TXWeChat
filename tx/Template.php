@@ -21,7 +21,6 @@ class Template extends TagLib
 
     public function tagTable($tag)
     {
-
         $this->tableParseStr = "<table class='layui-table'>\n";
         // TODO: 头部标签开始
         $this->tableParseStr .= '<thead><tr>';

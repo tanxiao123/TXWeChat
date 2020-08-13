@@ -83,4 +83,5 @@ class WxAppController extends Controller
             $this->error($exception->getMessage() );
         }
     }
+
 }
